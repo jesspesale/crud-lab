@@ -8,7 +8,7 @@ export default function manageRestaurants(state = {
 
     switch(action.type) {
         case "ADD_RESTAURANT":
-            const restaurant = { text: action.payload, id: cuidFn() };
+            const restaurant = { text: action.text, id: cuidFn() };
             return {
                 ...state,
                 restaurants: [...state.restaurants, restaurant]
@@ -16,14 +16,22 @@ export default function manageRestaurants(state = {
         case "DELETE_RESTAURANT":
             return {
                 ...state,
-                restaurants: state.restaurants.filter(rest => rest.id !== action.payload)
+                restaurants: state.restaurants.filter(rest => rest.id !== action.id)
             }
         case "ADD_REVIEW":
+            // console.log(action.payload)
             return {
                 ...state,
-                reviews: [...state.reviews, {text: action.payload, id: cuidFn(), restaurantId: 5 }]
+                reviews: [...state.reviews, {text: action.review.text, id: cuidFn(), restaurantId: action.review.id }]
             }
-            
+        
+        case "DELETE_REVIEW":
+            // debugger
+            return {
+                ...state,
+                reviews: state.reviews.filter(review => review.id !== action.id)
+
+            }
         default:
             return state
     }
